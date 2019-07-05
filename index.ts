@@ -1,4 +1,4 @@
-interface TaskItem {
+interface ITaskItem {
 	id: number;
 	task: () => void;
 	wait?: number;
@@ -9,7 +9,7 @@ export class ParallelQueue {
 	private concurrency = 1;
 	private running = 0;
 	private taskId = 0;
-	private taskQueue: TaskItem[] = [];
+	private taskQueue: ITaskItem[] = [];
 	private completeQueue?: () => any;
 	constructor(concurrency = 1, completeQueue?: () => any) {
 		this.concurrency = concurrency;
@@ -28,7 +28,7 @@ export class ParallelQueue {
 		}
 		this.runTask(this.taskQueue.shift());
 	}
-	private runTask(taskItem: TaskItem | any) {
+	private runTask(taskItem: ITaskItem | any) {
 		if (!taskItem) {
 			return;
 		}
@@ -49,7 +49,7 @@ export class ParallelQueue {
 			id: this.taskId++,
 			task,
 			wait: wait
-		} as TaskItem;
+		} as ITaskItem;
 		if (this.running < this.concurrency) {
 			this.runTask(ti);
 		} else {
