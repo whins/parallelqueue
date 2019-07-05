@@ -1,19 +1,11 @@
 {
-  "compilerOptions": {
-    "target": "es5",
+	"compilerOptions": {
+		"target": "es5",
 		"module": "commonjs",
-    "declaration": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "lib": [
-      "dom",
-      "es2015.promise",
-      "es5"
-		]
-  },
-		"exclude": [
-			"node_modules",
-			"dist",
-			"**/*.spec.*",
-		]
+		"declaration": true,
+		"strict": true,
+		"esModuleInterop": true,
+		"lib": ["dom", "es2015.promise", "es5"]
+	},
+	"exclude": ["node_modules", "dist", "**/*.spec.*"]
 }

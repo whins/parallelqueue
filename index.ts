@@ -1,11 +1,11 @@
 interface TaskItem {
 	id: number;
 	task: () => void;
-	timeout?: number;
+	wait?: number;
 	timeoutId?: any;
 }
 
-export class ConcurrentQueue {
+export class ParallelQueue {
 	private concurrency = 1;
 	private running = 0;
 	private taskId = 0;
@@ -34,20 +34,21 @@ export class ConcurrentQueue {
 		}
 		this.running++;
 		let that = this;
-		if (!!taskItem.timeout) {
+		if (!!taskItem.wait) {
 			taskItem.timeoutId = setTimeout(function() {
 				clearTimeout(taskItem.timeoutId);
 				taskItem.timeoutId = null;
 				that.resolveTask(taskItem);
-			}, taskItem.timeout);
+			}, taskItem.wait);
 		}
 		taskItem.task(() => this.resolveTask(taskItem));
 	}
-	push(task: (done: () => void) => void, timeout?: number) {
+
+	push(task: (done: () => void) => void, wait?: number) {
 		const ti = {
 			id: this.taskId++,
 			task,
-			timeout
+			wait: wait
 		} as TaskItem;
 		if (this.running < this.concurrency) {
 			this.runTask(ti);
@@ -56,6 +57,7 @@ export class ConcurrentQueue {
 		}
 		return this;
 	}
+
 	complete(completeQueue: () => any) {
 		this.completeQueue = completeQueue;
 		return this;

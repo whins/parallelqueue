@@ -1,21 +1,9 @@
 {
-  "name": "concurrentqueue",
-  "version": "1.0.1",
-  "description": "Concurrent Queue Helper",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "karma start",
-    "dev": "tsc && webpack-dev-server --inline --hot",
-    "build": "webpack -p"
-  },
-  "keywords": [
-    "queue",
-    "async",
-    "concurrent"
-  ],
   "author": "whins",
-  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whins/parallelqueue/issues"
+  },
+  "description": "Parallel Queue Helper allows you to run multiple tasks and handle when all tasks are completed (or by timeout)",
   "devDependencies": {
     "@types/jasmine": "^2.8.16",
     "jasmine-core": "^3.4.0",
@@ -29,5 +17,27 @@
     "webpack-cli": "^3.3.3",
     "webpack-command": "^0.4.2",
     "webpack-dev-server": "^3.7.0"
-  }
+  },
+  "homepage": "https://github.com/whins/parallelqueue#readme",
+  "keywords": [
+    "queue",
+    "async",
+    "parallel",
+    "concurrent"
+  ],
+  "license": "ISC",
+  "main": "dist/index.js",
+  "name": "@whins/parallelqueue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whins/parallelqueue.git"
+  },
+  "scripts": {
+    "build": "webpack -p",
+    "dev": "tsc && webpack-dev-server --inline --hot",
+    "publish": "npm publish --scope=@whins --access=public",
+    "test": "karma start"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.1"
 }

@@ -1,59 +1,41 @@
-import { ConcurrentQueue } from './index';
+import { ParallelQueue } from "./index";
 
-describe('ConcurrentQueue', () => {
+describe("ParallelQueue", () => {
+	beforeEach(function() {
+		// spyOn(ParallelQueue.prototype, 'push').and.callThrough();
+	});
 
-    beforeEach(function () {
-        // spyOn(ConcurrentQueue.prototype, 'push').and.callThrough();
-    });
+	let q: ParallelQueue = new ParallelQueue(5);
 
-    let q: any = new ConcurrentQueue(5);
-
-	it('should create queue', function(){
-		// q = new ConcurrentQueue(2);
+	it("should create queue", function() {
 		expect(q).toBeDefined();
-    });
+		q.complete(function() {
+			setTimeout(function() {
+				console.log("All tasks completed");
+			}, 500);
+		});
 
-	it('should push done task', function(){
-		expect(q).toBeDefined();
-		q.done(function () {
-            setTimeout(function () {
-                console.log("completed");
-            }, 500);
-        });
-    });
+		q.push(done => {
+			console.log("task 0 processing...");
+			setTimeout(() => {
+				console.log("task 0 done!");
+				done();
+			}, 5000);
+		});
 
-	it('should push few tasks', function(){
-		q.push(function (completeTask: Function) {
-            console.log("task 0 processing...");
-            setTimeout(function () {
-                completeTask();
-            }, 5000);
-        });
-    });
-
-	it('should push few tasks', function(){
-		q.push(function (completeTask: Function) {
-            console.log("task 1 processing...");
-            setTimeout(function () {
-                completeTask();
-            }, 2000);
-        });
-    });
-
-	it('should push few tasks', function(){
-		q.push(function (completeTask: Function) {
-            console.log("task 2 processing...");
-            setTimeout(function () {
-                completeTask();
-            }, 100);
-        });
-    });
-
-    it('should push few tasks', function(){
-        q.push(function (completeTask: Function) {
-            console.log("task 3 processing...");
-            setTimeout(function () { }, 500);
-        }, 3000);
-    });
-
+		q.push(done => {
+			console.log("task 1 processing...");
+			setTimeout(() => {
+				console.log("task 1 done!");
+			}, 500);
+		}, 500);
+		q.push(done => {
+			console.log("task 2 processing...");
+			setTimeout(() => {}, 500);
+		}, 3000);
+		q.push(done => {
+			console.log("task 3 processing...");
+			setTimeout(() => {}, 500);
+		}, 2000);
+	});
 });
